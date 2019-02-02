@@ -108,3 +108,121 @@ ${1:ReturnType} ${2:FunctionName}(${3:param})
 }
 endsnippet
 # vim:ft=snippets:
+
+######## Diy by im0qianqian ########
+priority 0
+
+snippet main "主函数"
+#include <bits/stdc++.h>
+#define IO                       \
+	ios::sync_with_stdio(false); \
+	cin.tie(0);                  \
+	cout.tie(0);                 \
+#define mem(a, x) memset(a, x, sizeof(a))
+#define per(x, a, b) for (int x = a; x <= b; x++)
+#define rep(x, a, b) for (int x = a; x >= b; x--)
+
+using namespace std;
+typedef long long LL;
+const int maxn = 1e5 + 10;
+const int mod = 1e9 + 7;
+const double eps = 1e-8;
+
+int main() {
+#ifdef LOCAL_IM0QIANQIAN
+	freopen("test.in", "r", stdin);
+//    freopen("test.out", "w", stdout);
+#else
+	IO;
+#endif // LOCAL_IM0QIANQIAN
+
+	${VISUAL}${0:/* Code */}
+	return 0;
+}
+endsnippet
+
+snippet fori "正向循环 0 -> len"
+for (int ${1:i} = ${2:0}; $1 < ${3:len}; $1++) {
+	${VISUAL}$0
+}
+endsnippet
+
+snippet forr "反向循环 len-1 -> 0"
+for (int ${1:i} = ${2:len - 1}; $1 >= ${3:0}; $1--) {
+	${VISUAL}$0
+}
+endsnippet
+
+snippet node "建图模板"
+struct node {
+	int from;
+	int to;
+	int next;
+	int cost;
+} edge[maxn << 1];
+int head[maxn], tot;
+
+void init() {
+	memset(head, -1, sizeof(head));
+	tot = 0;
+}
+
+void addedge(int u, int v, int cost) {
+	edge[tot].from = u;
+	edge[tot].to = v;
+	edge[tot].cost = cost;
+	edge[tot].next = head[u];
+	head[u] = tot++;
+}
+
+$0
+endsnippet
+
+snippet mult "快速幂"
+LL mult(LL a, LL n, LL mod) {
+	LL ans = 1;
+	a %= mod;
+	while (n) {
+		if (n & 1)
+			ans = (ans * a) % mod;
+		a = (a * a) % mod;
+		n >>= 1;
+	}
+	return ans;
+}
+
+$0
+endsnippet
+
+snippet unordered_map "更安全快速的 hash_table"
+struct custom_hash {
+	static uint64_t splitmix64(uint64_t x) {
+		x += 0x9e3779b97f4a7c15;
+		x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9;
+		x = (x ^ (x >> 27)) * 0x94d049bb133111eb;
+		return x ^ (x >> 31);
+	}
+	size_t operator()(uint64_t x) const {
+		static const uint64_t FIXED_RANDOM =
+			chrono::steady_clock::now().time_since_epoch().count();
+		return splitmix64(x + FIXED_RANDOM);
+	}
+};
+unordered_map<long long, int, custom_hash> ${1:safe_map};
+
+$0
+endsnippet
+
+snippet mt19937 "茅台 19937?"
+mt19937 mt_rand(
+	chrono::high_resolution_clock::now().time_since_epoch().count());
+endsnippet
+
+snippet freop "输入输出重定向"
+#ifdef LOCAL_IM0QIANQIAN
+	freopen("test.in", "r", stdin);
+//    freopen("test.out", "w", stdout);
+#endif // LOCAL_IM0QIANQIAN
+
+$0
+endsnippet
